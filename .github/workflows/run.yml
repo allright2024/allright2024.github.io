@@ -1,0 +1,30 @@
+name: Deploy Kimyong HTML Website
+# the name of the workflow
+
+on: # specifies when and why a workflow should be triggered.
+  push: # when push
+    branches: # which branch?
+      - main # main branch
+  # this workflow is !trigger!ed when !main! !branch! is !push!ed.
+  pull_request: # when pull_request
+    branches: # at main brach
+      - main # main branch
+  # this workflow is triggered when main branch is pull_request
+
+jobs: # define which job workflow perform
+  deploy: # the name of job
+    runs-on: ubuntu-latest
+    # use latest Ubuntu runner
+
+    steps: # specific steps
+      - name: Checkout Code # the name of first action name
+        uses: actions/checkout@v2 # this action checkout my repository.
+
+      - name: Deploy to Allright2024 GitHub Pages # the name of second action name
+        uses: peaceiris/actions-gh-pages@v3
+        # This is the action when I want to deploy the github repository to github page.
+        with: # the additional parameters delivered to action
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # authentication for github
+          publish_dir: ./
+        # choose the directory to publish because index.html is in './' so it is ./
